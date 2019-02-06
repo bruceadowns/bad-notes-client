@@ -14,7 +14,7 @@ export default class Settings extends Component {
         };
     }
 
-    billUser(details) {
+    static billUser(details) {
         return API.post("notes", "/billing", {
             body: details
         });
@@ -29,7 +29,7 @@ export default class Settings extends Component {
         this.setState({isLoading: true});
 
         try {
-            await this.billUser({
+            await Settings.billUser({
                 storage,
                 source: token.id
             });

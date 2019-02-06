@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { CardElement, injectStripe } from "react-stripe-elements";
+import React, {Component} from "react";
+import {FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+import {CardElement, injectStripe} from "react-stripe-elements";
 import LoaderButton from "./LoaderButton";
 import "./BillingForm.css";
 
@@ -28,27 +28,27 @@ class BillingForm extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleCardFieldChange = event => {
         this.setState({
             isCardComplete: event.complete
         });
-    }
+    };
 
     handleSubmitClick = async event => {
         event.preventDefault();
 
-        const { name } = this.state;
+        const {name} = this.state;
 
-        this.setState({ isProcessing: true });
+        this.setState({isProcessing: true});
 
-        const { token, error } = await this.props.stripe.createToken({ name });
+        const {token, error} = await this.props.stripe.createToken({name});
 
-        this.setState({ isProcessing: false });
+        this.setState({isProcessing: false});
 
-        this.props.onSubmit(this.state.storage, { token, error });
-    }
+        this.props.onSubmit(this.state.storage, {token, error});
+    };
 
     render() {
         const loading = this.state.isProcessing || this.props.loading;
@@ -65,7 +65,7 @@ class BillingForm extends Component {
                         placeholder="Number of notes to store"
                     />
                 </FormGroup>
-                <hr />
+                <hr/>
                 <FormGroup bsSize="large" controlId="name">
                     <ControlLabel>Cardholder&apos;s name</ControlLabel>
                     <FormControl
@@ -80,7 +80,7 @@ class BillingForm extends Component {
                     className="card-field"
                     onChange={this.handleCardFieldChange}
                     style={{
-                        base: { fontSize: "18px", fontFamily: '"Open Sans", sans-serif' }
+                        base: {fontSize: "18px", fontFamily: '"Open Sans", sans-serif'}
                     }}
                 />
                 <LoaderButton

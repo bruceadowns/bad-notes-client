@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     HelpBlock,
     FormGroup,
@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
-import { Auth } from "aws-amplify";
+import {Auth} from "aws-amplify";
 
 export default class Signup extends Component {
     constructor(props) {
@@ -39,12 +39,12 @@ export default class Signup extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         try {
             const newUser = await Auth.signUp({
@@ -58,13 +58,13 @@ export default class Signup extends Component {
             alert(e.message);
         }
 
-        this.setState({ isLoading: false });
-    }
+        this.setState({isLoading: false});
+    };
 
     handleConfirmationSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         try {
             await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
@@ -74,9 +74,9 @@ export default class Signup extends Component {
             this.props.history.push("/");
         } catch (e) {
             alert(e.message);
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }
-    }
+    };
 
     renderConfirmationForm() {
         return (

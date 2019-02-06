@@ -31,13 +31,13 @@ class App extends Component {
 
     userHasAuthenticated = authenticated => {
         this.setState({isAuthenticated: authenticated});
-    }
+    };
 
     handleLogout = async event => {
         await Auth.signOut();
         this.userHasAuthenticated(false);
         this.props.history.push("/login");
-    }
+    };
 
     render() {
         const childProps = {

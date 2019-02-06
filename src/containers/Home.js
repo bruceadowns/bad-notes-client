@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import React, {Component} from "react";
+import {PageHeader, ListGroup, ListGroupItem} from "react-bootstrap";
 import "./Home.css";
-import { API } from "aws-amplify";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
+import {API} from "aws-amplify";
+import {LinkContainer} from "react-router-bootstrap";
+import {Link} from "react-router-dom";
 
 export default class Home extends Component {
     constructor(props) {
@@ -21,17 +21,17 @@ export default class Home extends Component {
         }
 
         try {
-            const notes = await this.notes();
-            this.setState({ notes });
+            const notes = await Home.notes();
+            this.setState({notes});
         } catch (e) {
             alert(e);
         }
 
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
     }
 
-    notes() {
-        return API.get("notes", "/notes");
+    static notes() {
+        return API.get("notes", "/notes", {});
     }
 
     renderNotesList(notes) {

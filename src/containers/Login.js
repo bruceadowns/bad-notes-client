@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./Login.css";
-import { Auth } from "aws-amplify";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import {Auth} from "aws-amplify";
+import {FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 
 export default class Login extends Component {
@@ -23,23 +23,21 @@ export default class Login extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         try {
             await Auth.signIn(this.state.email, this.state.password);
-            // alert("Logged in");
             this.props.userHasAuthenticated(true);
-            // this.props.history.push("/");
         } catch (e) {
             alert(e.message);
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }
-    }
+    };
 
     render() {
         return (
@@ -71,7 +69,7 @@ export default class Login extends Component {
                         text="Login"
                         loadingText="Logging in..."
                     />
-                    </form>
+                </form>
             </div>
         );
     }

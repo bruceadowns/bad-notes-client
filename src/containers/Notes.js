@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { API, Storage } from "aws-amplify";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import React, {Component} from "react";
+import {API, Storage} from "aws-amplify";
+import {FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Notes.css";
-import { s3Upload } from "../libs/awsLib";
+import {s3Upload} from "../libs/awsLib";
 
 export default class Notes extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class Notes extends Component {
         try {
             let attachmentURL;
             const note = await this.getNote();
-            const { content, attachment } = note;
+            const {content, attachment} = note;
 
             if (attachment) {
                 attachmentURL = await Storage.vault.get(attachment);
@@ -42,14 +42,14 @@ export default class Notes extends Component {
     }
 
     getNote() {
-        return API.get("notes", `/notes/${this.props.match.params.id}`);
+        return API.get("notes", `/notes/${this.props.match.params.id}`, {});
     }
 
     validateForm() {
         return this.state.content.length > 0;
     }
 
-    formatFilename(str) {
+    static formatFilename(str) {
         return str.replace(/^\w+-/, "");
     }
 
@@ -57,11 +57,11 @@ export default class Notes extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleFileChange = event => {
         this.file = event.target.files[0];
-    }
+    };
 
     saveNote(note) {
         return API.put("notes", `/notes/${this.props.match.params.id}`, {
@@ -75,11 +75,11 @@ export default class Notes extends Component {
         event.preventDefault();
 
         if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-            alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
+            alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE / 1000000} MB.`);
             return;
         }
 
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         try {
             if (this.file) {
@@ -93,12 +93,12 @@ export default class Notes extends Component {
             this.props.history.push("/");
         } catch (e) {
             alert(e);
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }
-    }
+    };
 
     deleteNote() {
-        return API.del("notes", `/notes/${this.props.match.params.id}`);
+        return API.del("notes", `/notes/${this.props.match.params.id}`, {});
     }
 
     handleDelete = async event => {
@@ -112,16 +112,16 @@ export default class Notes extends Component {
             return;
         }
 
-        this.setState({ isDeleting: true });
+        this.setState({isDeleting: true});
 
         try {
             await this.deleteNote();
             this.props.history.push("/");
         } catch (e) {
             alert(e);
-            this.setState({ isDeleting: false });
+            this.setState({isDeleting: false});
         }
-    }
+    };
 
     render() {
         return (
@@ -144,14 +144,14 @@ export default class Notes extends Component {
                                 rel="noopener noreferrer"
                                 href={this.state.attachmentURL}
                             >
-                                {this.formatFilename(this.state.note.attachment)}
+                                {Notes.formatFilename(this.state.note.attachment)}
                             </a>
                         </FormControl.Static>
                     </FormGroup>}
                     <FormGroup controlId="file">
                         {!this.state.note.attachment &&
                         <ControlLabel>Attachment</ControlLabel>}
-                        <FormControl onChange={this.handleFileChange} type="file" />
+                        <FormControl onChange={this.handleFileChange} type="file"/>
                     </FormGroup>
                     <LoaderButton
                         block
